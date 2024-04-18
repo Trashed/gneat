@@ -2,13 +2,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-package mocks
+package neurals
 
-import "github.com/Trashed/gneat/neurals"
-
-type MockMutator struct {
-}
-
-func (mm MockMutator) MutateActivationFn(n *neurals.Node, fn neurals.ActivationFunc) {
-	n.ActivationFn = fn
+type Link struct {
+	Weight      float64
+	In          *Node
+	Out         *Node
+	IsRecurrent bool
 }

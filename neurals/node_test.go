@@ -2,36 +2,36 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-package gneat_test
+package neurals_test
 
 import (
 	"testing"
 
-	"github.com/Trashed/gneat"
 	"github.com/Trashed/gneat/activation"
 	"github.com/Trashed/gneat/internal/assertions"
 	"github.com/Trashed/gneat/mocks"
+	"github.com/Trashed/gneat/neurals"
 )
 
 func TestCreateNode(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		nodeType     gneat.Nodetype
-		activationFn gneat.ActivationFunc
+		nodeType     neurals.Nodetype
+		activationFn neurals.ActivationFunc
 	}{
 		{
-			nodeType:     gneat.NodeSensor,
+			nodeType:     neurals.NodeSensor,
 			activationFn: activation.NonActivationFunc,
 		},
 		{
-			nodeType:     gneat.NodeNeuron,
+			nodeType:     neurals.NodeNeuron,
 			activationFn: activation.NonActivationFunc,
 		},
 	}
 
 	for i, test := range tests {
-		node := gneat.NewNode(uint(i), test.nodeType, test.activationFn)
+		node := neurals.NewNode(uint(i), test.nodeType, test.activationFn)
 
 		assertions.Equals(t, test.nodeType, node.Type)
 	}
@@ -42,7 +42,7 @@ func TestMutateActivationFn(t *testing.T) {
 
 	m := mocks.MockMutator{}
 
-	n := gneat.NewNode(1, gneat.NodeNeuron, activation.NonActivationFunc)
+	n := neurals.NewNode(1, neurals.NodeNeuron, activation.NonActivationFunc)
 
 	m.MutateActivationFn(n, activation.SigmoidFunc)
 

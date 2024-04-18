@@ -2,7 +2,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-package gneat
+package neurals
 
 type Nodetype uint
 
@@ -24,9 +24,10 @@ func NewNode(id uint, nodeType Nodetype, fn ActivationFunc) *Node {
 }
 
 type Node struct {
-	Id           uint
-	Type         Nodetype
-	ActivationFn ActivationFunc
+	Id              uint
+	Type            Nodetype
+	ActivationFn    ActivationFunc
+	ActivationValue float64
 }
 
 type NodeMutator interface {

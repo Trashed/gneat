@@ -7,12 +7,12 @@ package activation
 import (
 	"math"
 
-	"github.com/Trashed/gneat"
+	"github.com/Trashed/gneat/neurals"
 )
 
 var (
-	NonActivationFunc gneat.ActivationFunc = nonActivationFunc
-	SigmoidFunc       gneat.ActivationFunc = sigmoidFunc
+	NonActivationFunc neurals.ActivationFunc = nonActivationFunc
+	SigmoidFunc       neurals.ActivationFunc = sigmoidFunc
 )
 
 func nonActivationFunc(x float64) float64 {
