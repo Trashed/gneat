@@ -10,9 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - This CHANGELOG file.
-- An example command-line application for launching NEAT experiments.
-    - An experiment for training a model that solves an XOR problem.
-- A rough and early implementation of NEAT algorithm.
+- An innovation record that is used for storing unique connections and keeping track of the global innovation number.
 
 ## Changed
 
