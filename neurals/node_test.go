@@ -54,33 +54,102 @@ func TestMutateActivationFn(t *testing.T) {
 func TestConnectFromSuccess(t *testing.T) {
 	t.Parallel()
 
+	inNode := neurals.NewNode(1, neurals.NodeInput, activation.NonActivationFunc)
+	outNode := neurals.NewNode(2, neurals.NodeOutput, activation.SigmoidFunc)
+	hiddenNode := neurals.NewNode(4, neurals.NodeHidden, activation.SigmoidFunc)
+
 	tests := []struct {
-		in  *neurals.Node
-		out *neurals.Node
-		// isRecurrent bool
+		in                *neurals.Node
+		out               *neurals.Node
+		shouldBeRecurrent bool
 	}{
 		{
-			in:  neurals.NewNode(1, neurals.NodeInput, activation.NonActivationFunc),
-			out: neurals.NewNode(2, neurals.NodeOutput, activation.SigmoidFunc),
+			in:  inNode,
+			out: outNode,
 		},
 		{
-			in:  neurals.NewNode(2, neurals.NodeHidden, activation.SigmoidFunc),
-			out: neurals.NewNode(3, neurals.NodeOutput, activation.SigmoidFunc),
+			in:  hiddenNode,
+			out: outNode,
+		},
+		{ // link back to the output node itself
+			in:                outNode,
+			out:               outNode,
+			shouldBeRecurrent: true,
+		},
+		{
+			in:                outNode,
+			out:               hiddenNode,
+			shouldBeRecurrent: true,
+		},
+		{ // link back to the hiddne node itself
+			in:                hiddenNode,
+			out:               hiddenNode,
+			shouldBeRecurrent: true,
 		},
 	}
 
 	for testNum, test := range tests {
-		t.Run(fmt.Sprintf("TestConnectFrom_%d", testNum), func(t *testing.T) {
-			link := test.in.ConnectFrom(test.out, 0.0)
+		t.Run(fmt.Sprintf("TestConnectFromSuccess_%d", testNum), func(t *testing.T) {
+			link, err := test.in.ConnectFrom(test.out, 0.0, test.shouldBeRecurrent)
 
+			assertions.Ok(t, err)
 			assertions.Assert(t, link != nil, "returned link shouldn't be nil")
 			assertions.Equals(t, link.In, test.in)
 			assertions.Equals(t, link.Out, test.out)
-			// assertions.Equals(t, link.IsRecurrent, test.isRecurrent)
+			assertions.Equals(t, link.IsRecurrent, test.shouldBeRecurrent)
 		})
 	}
 }
 
-// TODO: TestConnectFromFailure
-// - Don't connect output to output
-// - Don't connect input to input
+func TestConnectFromFailure(t *testing.T) {
+	t.Parallel()
+
+	inNode := neurals.NewNode(1, neurals.NodeInput, activation.NonActivationFunc)
+	outNode := neurals.NewNode(2, neurals.NodeOutput, activation.SigmoidFunc)
+	hiddenNode := neurals.NewNode(4, neurals.NodeHidden, activation.SigmoidFunc)
+
+	tests := []struct {
+		in     *neurals.Node
+		out    *neurals.Node
+		expErr error
+	}{
+		// recurrent link to the input node itself
+		{
+			in:     inNode,
+			out:    inNode,
+			expErr: neurals.ErrInvalidConnection,
+		},
+		// link to other input node
+		{
+			in:     inNode,
+			out:    neurals.NewNode(2, neurals.NodeInput, activation.NonActivationFunc),
+			expErr: neurals.ErrInvalidConnection,
+		},
+		// link from hidden node to input
+		{
+			in:     hiddenNode,
+			out:    inNode,
+			expErr: neurals.ErrInvalidConnection,
+		},
+		// link from output to input
+		{
+			in:     outNode,
+			out:    inNode,
+			expErr: neurals.ErrInvalidConnection,
+		},
+		{ // link from output to other output
+			in:     outNode,
+			out:    neurals.NewNode(4, neurals.NodeOutput, activation.SigmoidFunc),
+			expErr: neurals.ErrInvalidConnection,
+		},
+	}
+
+	for testNum, test := range tests {
+		t.Run(fmt.Sprintf("TestConnectFromFailure_%d", testNum), func(t *testing.T) {
+			_, err := test.in.ConnectFrom(test.out, 0.0, true)
+
+			assertions.Assert(t, err != nil, "returned error should't be nil")
+			assertions.Equals(t, err, test.expErr)
+		})
+	}
+}
