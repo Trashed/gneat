@@ -30,6 +30,17 @@ type Node struct {
 	ActivationValue float64
 }
 
+// ConnectFrom connects a node with a new [Link] from this node forward;
+// this node is the starting point, the other node is on the other side
+// of the new link. Returns the newly created [Link].
+func (n *Node) ConnectFrom(out *Node, weight float64) *Link {
+	return &Link{
+		In:     n,
+		Out:    out,
+		Weight: weight,
+	}
+}
+
 type NodeMutator interface {
 	MutateActivationFn(*Node, ActivationFunc)
 }

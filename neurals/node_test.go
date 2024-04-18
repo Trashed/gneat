@@ -5,6 +5,7 @@
 package neurals_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/Trashed/gneat/activation"
@@ -49,3 +50,37 @@ func TestMutateActivationFn(t *testing.T) {
 	const fnInputVal = 0.41
 	assertions.Equals(t, n.ActivationFn(fnInputVal), activation.SigmoidFunc(fnInputVal))
 }
+
+func TestConnectFrom(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		in  *neurals.Node
+		out *neurals.Node
+		// isRecurrent bool
+	}{
+		{
+			in:  neurals.NewNode(1, neurals.NodeSensor, activation.NonActivationFunc),
+			out: neurals.NewNode(2, neurals.NodeNeuron, activation.SigmoidFunc),
+		},
+		{
+			in:  neurals.NewNode(2, neurals.NodeNeuron, activation.SigmoidFunc),
+			out: neurals.NewNode(3, neurals.NodeNeuron, activation.SigmoidFunc),
+		},
+	}
+
+	for testNum, test := range tests {
+		t.Run(fmt.Sprintf("TestConnectFrom_%d", testNum), func(t *testing.T) {
+			link := test.in.ConnectFrom(test.out, 0.0)
+
+			assertions.Assert(t, link != nil, "returned link shouldn't be nil")
+			assertions.Equals(t, link.In, test.in)
+			assertions.Equals(t, link.Out, test.out)
+			// assertions.Equals(t, link.IsRecurrent, test.isRecurrent)
+		})
+	}
+}
+
+// TODO: TestConnectFromFailure
+// - Don't connect output to output
+// - Don't connect input to input
