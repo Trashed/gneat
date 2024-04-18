@@ -18,16 +18,16 @@ func TestCreateNode(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		nodeType     neurals.Nodetype
+		nodeType     neurals.NeuralNodeType
 		activationFn neurals.ActivationFunc
 	}{
 		{
-			nodeType:     neurals.NodeSensor,
+			nodeType:     neurals.NodeInput,
 			activationFn: activation.NonActivationFunc,
 		},
 		{
-			nodeType:     neurals.NodeNeuron,
-			activationFn: activation.NonActivationFunc,
+			nodeType:     neurals.NodeOutput,
+			activationFn: activation.SigmoidFunc,
 		},
 	}
 
@@ -43,7 +43,7 @@ func TestMutateActivationFn(t *testing.T) {
 
 	m := mocks.MockMutator{}
 
-	n := neurals.NewNode(1, neurals.NodeNeuron, activation.NonActivationFunc)
+	n := neurals.NewNode(1, neurals.NodeHidden, activation.NonActivationFunc)
 
 	m.MutateActivationFn(n, activation.SigmoidFunc)
 
@@ -51,7 +51,7 @@ func TestMutateActivationFn(t *testing.T) {
 	assertions.Equals(t, n.ActivationFn(fnInputVal), activation.SigmoidFunc(fnInputVal))
 }
 
-func TestConnectFrom(t *testing.T) {
+func TestConnectFromSuccess(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
@@ -60,12 +60,12 @@ func TestConnectFrom(t *testing.T) {
 		// isRecurrent bool
 	}{
 		{
-			in:  neurals.NewNode(1, neurals.NodeSensor, activation.NonActivationFunc),
-			out: neurals.NewNode(2, neurals.NodeNeuron, activation.SigmoidFunc),
+			in:  neurals.NewNode(1, neurals.NodeInput, activation.NonActivationFunc),
+			out: neurals.NewNode(2, neurals.NodeOutput, activation.SigmoidFunc),
 		},
 		{
-			in:  neurals.NewNode(2, neurals.NodeNeuron, activation.SigmoidFunc),
-			out: neurals.NewNode(3, neurals.NodeNeuron, activation.SigmoidFunc),
+			in:  neurals.NewNode(2, neurals.NodeHidden, activation.SigmoidFunc),
+			out: neurals.NewNode(3, neurals.NodeOutput, activation.SigmoidFunc),
 		},
 	}
 

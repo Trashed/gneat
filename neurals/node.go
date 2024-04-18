@@ -4,18 +4,18 @@
 
 package neurals
 
-type Nodetype uint
+type NeuralNodeType uint
 
 const (
-	// Input nodes
-	NodeSensor Nodetype = iota
-	// Hidden and output nodes
-	NodeNeuron
+	NodeBias NeuralNodeType = iota
+	NodeInput
+	NodeOutput
+	NodeHidden
 )
 
 type ActivationFunc func(float64) float64
 
-func NewNode(id uint, nodeType Nodetype, fn ActivationFunc) *Node {
+func NewNode(id uint, nodeType NeuralNodeType, fn ActivationFunc) *Node {
 	return &Node{
 		Id:           id,
 		Type:         nodeType,
@@ -25,7 +25,7 @@ func NewNode(id uint, nodeType Nodetype, fn ActivationFunc) *Node {
 
 type Node struct {
 	Id              uint
-	Type            Nodetype
+	Type            NeuralNodeType
 	ActivationFn    ActivationFunc
 	ActivationValue float64
 }
