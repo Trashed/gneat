@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Define an interface for mutating the node
   - Tested by mocking the mutator.
 - Add a couple of activation functions.
+- Add functionality for linking nodes.
 
 ## Changed
 

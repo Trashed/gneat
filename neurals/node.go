@@ -6,10 +6,12 @@ package neurals
 
 import "errors"
 
+// Errors related to [Node]s.
 var (
 	ErrInvalidConnection error = errors.New("link isn't supported")
 )
 
+// A NeuralNodeType is used assign a particular node type to a [Node].
 type NeuralNodeType uint
 
 // NeuralNodeTypes that can be assigned to a node.
@@ -20,8 +22,10 @@ const (
 	NodeOutput
 )
 
+// ActivationFunc is custom function type for assigning activation functions.
 type ActivationFunc func(float64) float64
 
+// NewNode creates and returns a new [Node] instance.
 func NewNode(id uint, nodeType NeuralNodeType, fn ActivationFunc) *Node {
 	return &Node{
 		Id:           id,
@@ -30,6 +34,7 @@ func NewNode(id uint, nodeType NeuralNodeType, fn ActivationFunc) *Node {
 	}
 }
 
+// A Node is a node in the neural network. The same type can be used as node genes in [genetics.Genome].
 type Node struct {
 	Id              uint
 	Type            NeuralNodeType
@@ -93,6 +98,9 @@ func isInvalidLink(in, out *Node) bool {
 	return false
 }*/
 
+// NodeMutators defines a method for mutating a [Node].
+//
+// MutateActivationFn changes the activation function to a different one in a Node.
 type NodeMutator interface {
 	MutateActivationFn(*Node, ActivationFunc)
 }

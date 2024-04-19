@@ -1,3 +1,4 @@
-- Recurrent links
-  - Don't allow output-to-output or input-to-input recurrent links.
-  - Detect whether new link is recurrent or not.
+Possible TODOs
+==============
+* mutator.go
+    - make this an actual implementation later?

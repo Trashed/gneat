@@ -4,6 +4,9 @@
 
 package neurals
 
+// Link is a structure that connects two nodes together in the neural network.
+//
+// In the case of input layer nodes, those nodes only have outgoing connections.
 type Link struct {
 	Weight      float64
 	In          *Node
