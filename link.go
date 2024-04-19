@@ -13,3 +13,12 @@ type Link struct {
 	Out         *Node
 	IsRecurrent bool
 }
+
+func NewLink(in, out *Node, weight float64, isRecurrent bool) *Link {
+	return &Link{
+		In:          in,
+		Out:         out,
+		Weight:      weight,
+		IsRecurrent: isRecurrent,
+	}
+}

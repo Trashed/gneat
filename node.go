@@ -51,12 +51,7 @@ func (n *Node) ConnectFrom(out *Node, weight float64, isRecurrent bool) (*Link, 
 		return nil, ErrInvalidConnection
 	}
 
-	return &Link{
-		In:          n,
-		Out:         out,
-		Weight:      weight,
-		IsRecurrent: isRecurrent,
-	}, nil
+	return NewLink(n, out, weight, isRecurrent), nil
 }
 
 func isInvalidLink(in, out *Node) bool {
