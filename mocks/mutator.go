@@ -4,11 +4,11 @@
 
 package mocks
 
-import "github.com/Trashed/gneat/neurals"
+import "github.com/Trashed/gneat"
 
 type MockMutator struct {
 }
 
-func (mm MockMutator) MutateActivationFn(n *neurals.Node, fn neurals.ActivationFunc) {
+func (mm MockMutator) MutateActivationFn(n *gneat.Node, fn gneat.ActivationFunc) {
 	n.ActivationFn = fn
 }

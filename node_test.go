@@ -2,37 +2,37 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-package neurals_test
+package gneat_test
 
 import (
 	"fmt"
 	"testing"
 
+	"github.com/Trashed/gneat"
 	"github.com/Trashed/gneat/activation"
 	"github.com/Trashed/gneat/internal/assertions"
 	"github.com/Trashed/gneat/mocks"
-	"github.com/Trashed/gneat/neurals"
 )
 
 func TestCreateNode(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		nodeType     neurals.NeuralNodeType
-		activationFn neurals.ActivationFunc
+		nodeType     gneat.NeuralNodeType
+		activationFn gneat.ActivationFunc
 	}{
 		{
-			nodeType:     neurals.NodeInput,
+			nodeType:     gneat.NodeInput,
 			activationFn: activation.NonActivationFunc,
 		},
 		{
-			nodeType:     neurals.NodeOutput,
+			nodeType:     gneat.NodeOutput,
 			activationFn: activation.SigmoidFunc,
 		},
 	}
 
 	for i, test := range tests {
-		node := neurals.NewNode(uint(i), test.nodeType, test.activationFn)
+		node := gneat.NewNode(uint(i), test.nodeType, test.activationFn)
 
 		assertions.Equals(t, test.nodeType, node.Type)
 	}
@@ -43,7 +43,7 @@ func TestMutateActivationFn(t *testing.T) {
 
 	m := mocks.MockMutator{}
 
-	n := neurals.NewNode(1, neurals.NodeHidden, activation.NonActivationFunc)
+	n := gneat.NewNode(1, gneat.NodeHidden, activation.NonActivationFunc)
 
 	m.MutateActivationFn(n, activation.SigmoidFunc)
 
@@ -54,13 +54,13 @@ func TestMutateActivationFn(t *testing.T) {
 func TestConnectFromSuccess(t *testing.T) {
 	t.Parallel()
 
-	inNode := neurals.NewNode(1, neurals.NodeInput, activation.NonActivationFunc)
-	outNode := neurals.NewNode(2, neurals.NodeOutput, activation.SigmoidFunc)
-	hiddenNode := neurals.NewNode(4, neurals.NodeHidden, activation.SigmoidFunc)
+	inNode := gneat.NewNode(1, gneat.NodeInput, activation.NonActivationFunc)
+	outNode := gneat.NewNode(2, gneat.NodeOutput, activation.SigmoidFunc)
+	hiddenNode := gneat.NewNode(4, gneat.NodeHidden, activation.SigmoidFunc)
 
 	tests := []struct {
-		in                *neurals.Node
-		out               *neurals.Node
+		in                *gneat.Node
+		out               *gneat.Node
 		shouldBeRecurrent bool
 	}{
 		{
@@ -104,43 +104,43 @@ func TestConnectFromSuccess(t *testing.T) {
 func TestConnectFromFailure(t *testing.T) {
 	t.Parallel()
 
-	inNode := neurals.NewNode(1, neurals.NodeInput, activation.NonActivationFunc)
-	outNode := neurals.NewNode(2, neurals.NodeOutput, activation.SigmoidFunc)
-	hiddenNode := neurals.NewNode(4, neurals.NodeHidden, activation.SigmoidFunc)
+	inNode := gneat.NewNode(1, gneat.NodeInput, activation.NonActivationFunc)
+	outNode := gneat.NewNode(2, gneat.NodeOutput, activation.SigmoidFunc)
+	hiddenNode := gneat.NewNode(4, gneat.NodeHidden, activation.SigmoidFunc)
 
 	tests := []struct {
-		in     *neurals.Node
-		out    *neurals.Node
+		in     *gneat.Node
+		out    *gneat.Node
 		expErr error
 	}{
 		// recurrent link to the input node itself
 		{
 			in:     inNode,
 			out:    inNode,
-			expErr: neurals.ErrInvalidConnection,
+			expErr: gneat.ErrInvalidConnection,
 		},
 		// link to other input node
 		{
 			in:     inNode,
-			out:    neurals.NewNode(2, neurals.NodeInput, activation.NonActivationFunc),
-			expErr: neurals.ErrInvalidConnection,
+			out:    gneat.NewNode(2, gneat.NodeInput, activation.NonActivationFunc),
+			expErr: gneat.ErrInvalidConnection,
 		},
 		// link from hidden node to input
 		{
 			in:     hiddenNode,
 			out:    inNode,
-			expErr: neurals.ErrInvalidConnection,
+			expErr: gneat.ErrInvalidConnection,
 		},
 		// link from output to input
 		{
 			in:     outNode,
 			out:    inNode,
-			expErr: neurals.ErrInvalidConnection,
+			expErr: gneat.ErrInvalidConnection,
 		},
 		{ // link from output to other output
 			in:     outNode,
-			out:    neurals.NewNode(4, neurals.NodeOutput, activation.SigmoidFunc),
-			expErr: neurals.ErrInvalidConnection,
+			out:    gneat.NewNode(4, gneat.NodeOutput, activation.SigmoidFunc),
+			expErr: gneat.ErrInvalidConnection,
 		},
 	}
 
