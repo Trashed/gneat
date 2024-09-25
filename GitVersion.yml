@@ -1,6 +1,68 @@
-mode: Mainline
-next-version: 0.0.1
-branches: {}
+mode: ContinuousDelivery
+tag-prefix: '[vV]'
+continuous-delivery-fallback-tag: ci
+next-version: 0.1.0
+major-version-bump-message: '\+semver:\s?(breaking|major)'
+minor-version-bump-message: '\+semver:\s?(feature|minor)'
+patch-version-bump-message: '\+semver:\s?(fix|patch)'
+no-bump-message: '\+semver:\s?(none|skip)'
+legacy-semver-padding: 4
+build-metadata-padding: 4
+commits-since-version-source-padding: 4
+tag-pre-release-weight: 60000
+commit-message-incrementing: Enabled
+branches:
+  main:
+    mode: ContinuousDeployment
+    tag: ''
+    increment: None
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: false
+    regex: ^master$|^main$
+    source-branches:
+      - develop
+      - release
+    tracks-release-branches: false
+    is-release-branch: true
+    is-mainline: true
+    pre-release-weight: 55000
+  feature:
+    mode: ContinuousDelivery
+    tag: '{BranchName}'
+    increment: Minor
+    regex: ^feature(s)?[/-]
+    source-branches:
+      - main
+      - feature
+      - hotfix
+    pre-release-weight: 30000
+  pull-request:
+    mode: ContinuousDelivery
+    tag: PullRequest
+    increment: Inherit
+    tag-number-pattern: '[/-](?<number>\d+)'
+    regex: ^(pull|pull\-requests|pr)[/-]
+    source-branches:
+      - feature
+      - hotfix
+    pre-release-weight: 30000
+  hotfix:
+    mode: ContinuousDelivery
+    tag: hotfix
+    increment: Patch
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    regex: ^hotfix(es)?[/-]
+    source-branches:
+      - main
+      - hotfix
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: false
+    pre-release-weight: 30000
 ignore:
   sha: []
+increment: Inherit
+commit-date-format: yyyy-MM-dd
 merge-message-formats: {}
+update-build-number: true

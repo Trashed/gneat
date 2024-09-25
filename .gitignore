@@ -1,2 +1,5 @@
+# Goland/IDE-specific folder
+.idea
+
 # Windows executables
 *.exe
