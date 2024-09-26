@@ -12,4 +12,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CHANGELOG, README, LICENSE files.
 - GitVersion configuration.
 
-[Unreleased]: https://github.com/Trashed/gneat
+[Unreleased]: https://github.com/Trashed/gneat/tree/feature/genome
