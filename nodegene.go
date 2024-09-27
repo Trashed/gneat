@@ -20,3 +20,16 @@ type NodeGene struct {
 	nodeType NodeType
 	trait    *Trait
 }
+
+func CreateNode(id uint, nodeType NodeType, trait *Trait) (*NodeGene, error) {
+
+	if trait == nil {
+		return nil, ErrNilTraitParameter
+	}
+
+	return &NodeGene{
+		id:       id,
+		nodeType: nodeType,
+		trait:    trait,
+	}, nil
+}

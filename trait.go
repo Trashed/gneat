@@ -12,7 +12,20 @@ type Trait struct {
 	connectionWeightRange float64
 	bias                  float64
 	recurrentStrength     float64
-	connectionEnabled     bool
-	module                string // This is for tagging certain nodes or connections to a named group. Not to be mutated.
+	// weightMutationRate float64 // TODO: Decide whether this would make a good trait property.
+	connectionEnabled bool
+	module            string // This is for tagging certain nodes or connections to a named group. Not to be mutated. Can be empty.
 	// distanceMetric        DistanceMetricEnum
+}
+
+func CreateTrait(id uint, activationFuncName ActivationFuncEnum, connectionWeightRange float64, bias float64, recurrentStrength float64, enabled bool, module string) *Trait {
+	return &Trait{
+		id:                    id,
+		activationFunc:        activationFuncName,
+		connectionWeightRange: connectionWeightRange,
+		bias:                  bias,
+		recurrentStrength:     recurrentStrength,
+		connectionEnabled:     enabled,
+		module:                module,
+	}
 }
