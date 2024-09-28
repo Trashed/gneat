@@ -15,11 +15,14 @@ package genetics
 import "github.com/Trashed/gneat"
 
 type Trait struct {
-	id                    uint
-	activationFunc        gneat.ActivationFuncEnum
+	id             uint
+	activationFunc gneat.ActivationFuncEnum
+	// Controls the range of weights that can be assigned to a connection gene. Some genes may allow a wider or narrower range of possible weight values.
 	connectionWeightRange float64
-	bias                  float64
-	recurrentStrength     float64
+	//  Represents the bias value for certain neurons (or even entire node groups). Instead of using a fixed bias (like 1), this trait allows the bias value to evolve over time.
+	bias float64
+	// Represents the strength or impact of recurrent connections, if the network includes recurrence (i.e., feedback loops).
+	recurrentStrength float64
 	// weightMutationRate float64 // TODO: Decide whether this would make a good trait property.
 	connectionEnabled bool
 	module            string // This is for tagging certain nodes or connections to a named group. Not to be mutated. Can be empty.

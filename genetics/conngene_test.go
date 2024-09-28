@@ -26,7 +26,7 @@ func TestCreateConnGeneWithNilTrait(t *testing.T) {
 	var trait *genetics.Trait = nil
 	expErr := gneat.ErrNilTraitParameter
 
-	conn, err := genetics.CreateConnGene(rand.Uint(), nil, nil, trait, rand.Float64(), rand.Uint())
+	conn, err := genetics.CreateConnGene(nil, nil, trait, rand.Float64(), rand.Uint())
 	if conn == nil && err == nil {
 		t.Errorf("CreateConnGene shouldn't return both conn and err as nil")
 	}
@@ -46,7 +46,7 @@ func TestCreateConnGeneWithNilNodes(t *testing.T) {
 
 	expErr := gneat.ErrNilConnGeneNodeParameter
 
-	_, err := genetics.CreateConnGene(rand.Uint(), nodeIn, nodeOut, trait, rand.Float64(), rand.Uint())
+	_, err := genetics.CreateConnGene(nodeIn, nodeOut, trait, rand.Float64(), rand.Uint())
 	if !errors.Is(err, expErr) {
 		t.Errorf("error = %v, expected err: %v", err, expErr)
 	}
@@ -59,7 +59,7 @@ func TestCreateConnGene(t *testing.T) {
 	nodeIn, _ := genetics.CreateNode(1, genetics.INPUT_NODE, trait)
 	nodeOut, _ := genetics.CreateNode(2, genetics.OUTPUT_NODE, trait)
 
-	conn, err := genetics.CreateConnGene(1, nodeIn, nodeOut, trait, rand.Float64(), rand.Uint())
+	conn, err := genetics.CreateConnGene(nodeIn, nodeOut, trait, rand.Float64(), rand.Uint())
 	if conn == nil && err == nil {
 		t.Errorf("connection shouldn't be nil")
 	}

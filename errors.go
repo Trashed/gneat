@@ -9,6 +9,7 @@ package gneat
 import "errors"
 
 var (
-	ErrNilTraitParameter        = errors.New("trait can't be nil")
-	ErrNilConnGeneNodeParameter = errors.New("connection input or output node can't be nil")
+	ErrNilTraitParameter           = errors.New("trait can't be nil")
+	ErrNilConnGeneNodeParameter    = errors.New("connection input or output node can't be nil")
+	ErrInnovationNumberLenMismatch = errors.New("innovation number doesn't match with the length of the record")
 )

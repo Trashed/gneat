@@ -15,7 +15,6 @@ package genetics
 import "github.com/Trashed/gneat"
 
 type ConnGene struct {
-	id         uint
 	nodeIn     *NodeGene
 	nodeOut    *NodeGene
 	trait      *Trait
@@ -24,7 +23,7 @@ type ConnGene struct {
 	// enabled bool		// TODO: This is already specified within the Trait, so this isn't probably needed here.
 }
 
-func CreateConnGene(id uint, nodeIn *NodeGene, nodeOut *NodeGene, trait *Trait, weight float64, innovation uint) (*ConnGene, error) {
+func CreateConnGene(nodeIn *NodeGene, nodeOut *NodeGene, trait *Trait, weight float64, innovation uint) (*ConnGene, error) {
 
 	if trait == nil {
 		return nil, gneat.ErrNilTraitParameter
@@ -35,11 +34,14 @@ func CreateConnGene(id uint, nodeIn *NodeGene, nodeOut *NodeGene, trait *Trait, 
 	}
 
 	return &ConnGene{
-		id:         id,
 		nodeIn:     nodeIn,
 		nodeOut:    nodeOut,
 		trait:      trait,
 		weight:     weight,
 		innovation: innovation,
 	}, nil
+}
+
+func (g ConnGene) Innovation() uint {
+	return g.innovation
 }

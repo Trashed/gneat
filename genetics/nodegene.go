@@ -41,3 +41,11 @@ func CreateNode(id uint, nodeType NodeType, trait *Trait) (*NodeGene, error) {
 		trait:    trait,
 	}, nil
 }
+
+func (n NodeGene) Trait() *Trait {
+	return n.trait
+}
+
+func (n NodeGene) Id() uint {
+	return n.id
+}
