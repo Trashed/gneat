@@ -4,7 +4,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package gneat
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+package genetics
+
+import "github.com/Trashed/gneat"
 
 type NodeType uint
 
@@ -24,7 +32,7 @@ type NodeGene struct {
 func CreateNode(id uint, nodeType NodeType, trait *Trait) (*NodeGene, error) {
 
 	if trait == nil {
-		return nil, ErrNilTraitParameter
+		return nil, gneat.ErrNilTraitParameter
 	}
 
 	return &NodeGene{

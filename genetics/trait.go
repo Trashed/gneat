@@ -4,11 +4,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package gneat
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+package genetics
+
+import "github.com/Trashed/gneat"
 
 type Trait struct {
 	id                    uint
-	activationFunc        ActivationFuncEnum
+	activationFunc        gneat.ActivationFuncEnum
 	connectionWeightRange float64
 	bias                  float64
 	recurrentStrength     float64
@@ -18,7 +26,7 @@ type Trait struct {
 	// distanceMetric        DistanceMetricEnum
 }
 
-func CreateTrait(id uint, activationFuncName ActivationFuncEnum, connectionWeightRange float64, bias float64, recurrentStrength float64, enabled bool, module string) *Trait {
+func CreateTrait(id uint, activationFuncName gneat.ActivationFuncEnum, connectionWeightRange float64, bias float64, recurrentStrength float64, enabled bool, module string) *Trait {
 	return &Trait{
 		id:                    id,
 		activationFunc:        activationFuncName,
