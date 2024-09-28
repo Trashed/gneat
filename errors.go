@@ -9,5 +9,6 @@ package gneat
 import "errors"
 
 var (
-	ErrNilTraitParameter = errors.New("trait can't be nil")
+	ErrNilTraitParameter        = errors.New("trait can't be nil")
+	ErrNilConnGeneNodeParameter = errors.New("connection input or output node can't be nil")
 )

@@ -7,10 +7,31 @@
 package gneat
 
 type ConnGene struct {
-	id      uint
-	nodeIn  uint
-	nodeOut uint
-	trait   *Trait
-	weight  float64
-	// enabled bool		// TODO: This is already specified withing the Trait, so this isn't probably needed here.
+	id         uint
+	nodeIn     *NodeGene
+	nodeOut    *NodeGene
+	trait      *Trait
+	weight     float64
+	innovation uint
+	// enabled bool		// TODO: This is already specified within the Trait, so this isn't probably needed here.
+}
+
+func CreateConnGene(id uint, nodeIn *NodeGene, nodeOut *NodeGene, trait *Trait, weight float64, innovation uint) (*ConnGene, error) {
+
+	if trait == nil {
+		return nil, ErrNilTraitParameter
+	}
+
+	if nodeIn == nil || nodeOut == nil {
+		return nil, ErrNilConnGeneNodeParameter
+	}
+
+	return &ConnGene{
+		id:         id,
+		nodeIn:     nodeIn,
+		nodeOut:    nodeOut,
+		trait:      trait,
+		weight:     weight,
+		innovation: innovation,
+	}, nil
 }
