@@ -1,0 +1,47 @@
+FOR INTERNAL PLANNING
+=========================
+
+Start genome file
+===================
+- node trait
+    - id
+    - activation function
+    - bias value
+- connection trait
+    - id
+    - enabled
+    - recurrent strength
+    - connection weight range
+    - module
+- node
+    - id
+    - type (input, hidden, output)
+    - node trait
+- connection
+    - innovation (basically id)
+    - weight
+    - input node (id)
+    - output node (id)
+    - connection trait
+
+Possible start genome for XOR problem
+--------------------------------------
+
+genomestart 1       <-- genome of id 1?
+// nodetrait, id, activation func, bias value
+nodetrait 1 0 1.0   // node trait for bias node
+nodetrait 2 0 0.0   // node trait for input nodes
+nodetrait 3 1 0.0   // node trait for output node; has a SIGMOID activation function marked by value 1
+// node, id, type, trait
+node 1 0 1      // bias node
+node 2 1 2      // input node
+node 3 1 2      // input node
+node 4 2 3      // output node
+// connection trait, id, enabled, recurrent strength, connection weight range, module
+conntrait 1 1 0.0 1.0 1.0
+conntrait 2 1 0.0 1.0 2.0
+// connection gene, innovation/id, weight, input id, output id, connection trait
+conngene 1 1.0 1 4 1    // bias -> output
+conngene 2 1.0 2 4 2    // input 1 -> output
+conngene 3 1.0 3 4 2    // input 2 -> output
+

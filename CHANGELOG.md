@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- A skeleton app for XOR experiment.
 - CHANGELOG, README, LICENSE files.
 - GitVersion configuration.
 
-[Unreleased]: https://github.com/Trashed/gneat/tree/feature/genome
+[Unreleased]: https://github.com/Trashed/gneat/tree/feature/xor-example-app
