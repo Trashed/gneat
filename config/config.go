@@ -6,8 +6,29 @@
 
 package config
 
-import "github.com/Trashed/gneat"
+import (
+	"encoding/json"
+	"log"
+	"os"
+
+	"github.com/Trashed/gneat"
+)
 
 func FromFile(path string) gneat.NeatConfig {
-	return gneat.NeatConfig{}
+
+	b, err := os.ReadFile(path)
+	if err != nil {
+		log.Fatalf("error while reading the configuration file: %v\n", err)
+		return gneat.NeatConfig{}
+	}
+
+	conf := gneat.NeatConfig{}
+
+	err = json.Unmarshal(b, &conf)
+	if err != nil {
+		log.Fatalf("error while parsing file content to NeatConfig struct: %v\n", err)
+		return conf
+	}
+
+	return conf
 }
