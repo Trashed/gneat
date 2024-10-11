@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - A skeleton app for XOR experiment.
 - Parsing of NEAT configuration from JSON file.
+- Parsing of initial genome from a text file.
 - CHANGELOG, README, LICENSE files.
 - GitVersion configuration.
 

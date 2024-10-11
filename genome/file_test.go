@@ -60,6 +60,12 @@ func TestFromFile(t *testing.T) {
 					{Id: 2, ActivationFunc: activation.ActivationNone, Bias: 0.0},
 					{Id: 3, ActivationFunc: activation.ActivationSigmoid, Bias: 0.0},
 				},
+				Nodes: []*genome.Node{
+					{Id: 1, NodeType: genome.NodeBias, Trait: &genome.NodeTrait{Id: 1, ActivationFunc: activation.ActivationNone, Bias: 1.0}},
+					{Id: 2, NodeType: genome.NodeInput, Trait: &genome.NodeTrait{Id: 2, ActivationFunc: activation.ActivationNone, Bias: 0.0}},
+					{Id: 3, NodeType: genome.NodeInput, Trait: &genome.NodeTrait{Id: 2, ActivationFunc: activation.ActivationNone, Bias: 0.0}},
+					{Id: 4, NodeType: genome.NodeOutput, Trait: &genome.NodeTrait{Id: 3, ActivationFunc: activation.ActivationSigmoid, Bias: 0.0}},
+				},
 			},
 			wantErr: false,
 		},
