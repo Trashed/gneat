@@ -8,20 +8,26 @@ package main
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/Trashed/gneat"
 	"github.com/Trashed/gneat/config"
-	"log"
+	"github.com/Trashed/gneat/genome"
 )
 
 // TODO: WIP implementation, may possibly and probably will change in the future
 func main() {
 	neat := gneat.Init(config.FromFile("xor.json")) // TODO: Inject configuration; returns a NEAT object that wraps the components needed for evolving the neural network and running the experiment.
 	fmt.Printf("neat object: %+v\n", neat)
-	neat.SetExperiment(func() {
+	neat.SetExperiment(func() { // TODO: Receive the genome and possibly another data as an argument to the first-class func
 		log.Println("this activation function is a stub")
 	}) // TODO: Inject experimentFunc to NeatCtx
 	// TODO: Read starter genome from file and generate starter population from starter genome
-	neat.SeedPopulation("empty genome file")
+	genome, err := genome.FromFile("startgenome")
+	if err != nil {
+		log.Fatalf("parsing genome file failed: %v\n", err)
+	}
+	neat.SeedPopulation(genome)
 	// TODO: Run experiment - inject reporterFunc for reporting metrics about training and evaluation
 	log.Fatalf("failed to run neat experiment: %v\n", neat.Run(func() {}))
 }
