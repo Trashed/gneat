@@ -8,9 +8,11 @@ package main
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/Trashed/gneat"
 	"github.com/Trashed/gneat/config"
-	"log"
+	"github.com/Trashed/gneat/genome"
 )
 
 // TODO: WIP implementation, may possibly and probably will change in the future
@@ -21,7 +23,11 @@ func main() {
 		log.Println("this activation function is a stub")
 	}) // TODO: Inject experimentFunc to NeatCtx
 	// TODO: Read starter genome from file and generate starter population from starter genome
-	neat.SeedPopulation("empty genome file")
+	genome, err := genome.FromFile("startgenome")
+	if err != nil {
+		log.Fatalf("parsing genome file failed: %v\n", err)
+	}
+	neat.SeedPopulation(genome)
 	// TODO: Run experiment - inject reporterFunc for reporting metrics about training and evaluation
 	log.Fatalf("failed to run neat experiment: %v\n", neat.Run(func() {}))
 }

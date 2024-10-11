@@ -1,0 +1,22 @@
+{
+    "name": "XOR experiment",
+    "populationSize": 200,
+    "crossoverRate": 0.75,
+    "mutationRate": 0.25,
+    "weightMutationRate": 0.8,
+    "weightPerturbationStrength": 0.1,
+    "addNodeMutationRate": 0.03,
+    "addConnectionMutationRate": 0.05,
+    "removeConnectionMutationRate": 0.01,
+    "changeActivationFunctionMutationRate": 0.01,
+    "activationFunctions": ["None", "Sigmoid", "Tanh"],
+    "compatibilityThreshold": 3.0,
+    "excessGeneCoefficient": 1.0,
+    "disjointGeneCoefficient": 1.0,
+    "weightDifferenceCoefficient": 0.4,
+    "speciesStagnationLimit": 15,
+    "survivalThreshold": 0.2,
+    "maxGenerations": 100,
+    "initialConnectionDensity": 0.05,
+    "elitism": 1
+}
