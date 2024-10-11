@@ -9,6 +9,7 @@ package genome
 import (
 	"bufio"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -23,8 +24,16 @@ func FromFile(path string) (*Genome, error) {
 	defer file.Close()
 
 	sc := bufio.NewScanner(file)
+
+	discardCommentdRegexp := regexp.MustCompile(`^(\\s*\\/{2,}|\\/{2,})`)
+
 	for sc.Scan() {
 		line := sc.Text()
+
+		if discardCommentdRegexp.MatchString(line) {
+			continue
+		}
+
 		if strings.Contains(line, "genomestart") {
 			if err = initGenome(g, line); err != nil {
 				return nil, err
