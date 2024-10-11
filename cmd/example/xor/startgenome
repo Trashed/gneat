@@ -1,33 +1,4 @@
-FOR INTERNAL PLANNING
-=========================
-
-Start genome file
-===================
-- node trait
-    - id
-    - activation function
-    - bias value
-- connection trait
-    - id
-    - enabled
-    - recurrent strength
-    - connection weight range
-    - module
-- node
-    - id
-    - type (input, hidden, output)
-    - node trait
-- connection
-    - innovation (basically id)
-    - weight
-    - input node (id)
-    - output node (id)
-    - connection trait
-
-Possible start genome for XOR problem
---------------------------------------
-
-genomestart 1       <-- genome of id 1?
+genomestart 1
 // nodetrait, id, activation func, bias value
 nodetrait 1 0 1.0   // node trait for bias node
 nodetrait 2 0 0.0   // node trait for input nodes
@@ -45,4 +16,3 @@ conngene 1 1.0 1 4 1    // bias -> output
 conngene 2 1.0 2 4 2    // input 1 -> output
 conngene 3 1.0 3 4 2    // input 2 -> output
 genomeend 1
-
