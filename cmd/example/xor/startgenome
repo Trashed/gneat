@@ -1,0 +1,11 @@
+genomestart 1
+// node, id, type
+node 1 0  // bias node
+node 2 1  // input node
+node 3 1  // input node
+node 4 2  // output node
+// connection gene, innovation/id, weight, input id, output id, enabled/disabled
+gene 1 1.0 1 4 1  // bias -> output
+gene 2 1.0 2 4 1  // input 1 -> output
+gene 3 1.0 3 4 1  // input 2 -> output
+genomeend 1

@@ -9,6 +9,8 @@ package gneat
 import (
 	"errors"
 	"log"
+
+	"github.com/Trashed/gneat/genome"
 )
 
 type Neat struct {
@@ -21,8 +23,8 @@ func (n *Neat) SetExperiment(experimentFunc func()) {
 	n.experiment = experimentFunc
 }
 
-func (n *Neat) SeedPopulation(genomeFile string) {
-	log.Printf("genome file name: %s\n", genomeFile)
+func (n *Neat) SeedPopulation(initialGenome *genome.Genome) {
+	log.Printf("initial genome: %+v\n", initialGenome)
 }
 
 func (n *Neat) Run(reporterFunc func()) error {

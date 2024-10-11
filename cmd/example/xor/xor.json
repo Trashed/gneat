@@ -9,7 +9,7 @@
     "addConnectionMutationRate": 0.05,
     "removeConnectionMutationRate": 0.01,
     "changeActivationFunctionMutationRate": 0.01,
-    "activationFunctions": ["Sigmoid", "Tanh"],
+    "activationFunctions": ["None", "Sigmoid", "Tanh"],
     "compatibilityThreshold": 3.0,
     "excessGeneCoefficient": 1.0,
     "disjointGeneCoefficient": 1.0,
