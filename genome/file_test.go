@@ -11,6 +11,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/Trashed/gneat/activation"
 	"github.com/Trashed/gneat/genome"
 )
 
@@ -50,9 +51,16 @@ func TestFromFile(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			name:    "valid startgenome",
-			args:    args{path: "validstartgenome", fileContent: validFileContent},
-			want:    &genome.Genome{Id: 1},
+			name: "valid startgenome",
+			args: args{path: "validstartgenome", fileContent: validFileContent},
+			want: &genome.Genome{
+				Id: 1,
+				NodeTraits: []*genome.NodeTrait{
+					{Id: 1, ActivationFunc: activation.ActivationNone, Bias: 1.0},
+					{Id: 2, ActivationFunc: activation.ActivationNone, Bias: 0.0},
+					{Id: 3, ActivationFunc: activation.ActivationSigmoid, Bias: 0.0},
+				},
+			},
 			wantErr: false,
 		},
 	}

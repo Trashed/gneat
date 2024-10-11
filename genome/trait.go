@@ -6,7 +6,10 @@
 
 package genome
 
-type Genome struct {
-	Id         uint
-	NodeTraits []*NodeTrait
+import "github.com/Trashed/gneat/activation"
+
+type NodeTrait struct {
+	Id             uint
+	ActivationFunc activation.ActivationFuncEnum
+	Bias           float64
 }

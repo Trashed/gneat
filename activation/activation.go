@@ -4,9 +4,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package genome
+package activation
 
-type Genome struct {
-	Id         uint
-	NodeTraits []*NodeTrait
-}
+type ActivationFuncEnum uint
+
+const (
+	ActivationNone ActivationFuncEnum = iota
+	ActivationSigmoid
+	// TODO: Add the rest of the activation functions
+)
