@@ -26,3 +26,24 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/execute@v0.9.12
+      id: gitversion
+
+    - name: Output GitVersion variables
+      run: |
+        echo "Version: ${{ steps.gitversion.outputs.semVer }}"
+        echo "Full SemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
+
+    - name: Tag and Push Version
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      env:
+        GIT_TAG: ${{ steps.gitversion.outputs.fullSemVer }}
+        GITHUB_TOKEN: ${{ secrets.GO_BUILD_TOKEN }}
+      run: |
+        git config --local user.name "GitHub Actions"
+        git config --local user.email "actions@github.com"
+        git tag -a "v$GIT_TAG" -m "Release $GIT_TAG"
+        git push origin "v$GIT_TAG"
+
