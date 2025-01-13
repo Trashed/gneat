@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Go build workflow in Github Actions.
 - A skeleton app for XOR experiment.
 - Parsing of NEAT configuration from JSON file.
 - Parsing of initial genome from a text file.
