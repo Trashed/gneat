@@ -23,8 +23,13 @@ func (n *Neat) SetExperiment(experimentFunc func()) {
 	n.experiment = experimentFunc
 }
 
-func (n *Neat) SeedPopulation(initialGenome *genome.Genome) {
+func (n *Neat) SeedPopulation(initialGenome *genome.Genome) error {
+	if initialGenome == nil {
+		return genome.ErrNilInitialGenome
+	}
+
 	log.Printf("initial genome: %+v\n", initialGenome)
+	return nil
 }
 
 func (n *Neat) Run(reporterFunc func()) error {
