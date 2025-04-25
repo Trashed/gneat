@@ -14,6 +14,7 @@ import (
 	"github.com/Trashed/gneat"
 )
 
+// TODO: Move this method to the config.go in the project root?
 func FromFile(path string) gneat.NeatConfig {
 
 	b, err := os.ReadFile(path)
