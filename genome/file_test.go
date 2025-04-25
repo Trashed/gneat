@@ -81,9 +81,6 @@ func TestFromFile(t *testing.T) {
 				t.Errorf("FromFile() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			/*if !reflect.DeepEqual(actual, tt.expected) {
-				t.Errorf("FromFile() = %v, want %v", actual, tt.expected)
-			}*/
 			if actual.Id != tt.expected.Id {
 				t.Fatalf("ids doesn't match: expected %d but got %d\n", tt.expected.Id, actual.Id)
 			}
