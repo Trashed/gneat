@@ -4,14 +4,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package genome_test
+package genetics_test
 
 import (
 	"fmt"
 	"os"
 	"testing"
 
-	"github.com/Trashed/gneat/genome"
+	"github.com/Trashed/gneat/genetics"
 )
 
 const (
@@ -29,8 +29,8 @@ genomeend 1`
 )
 
 var (
-	nodeStore map[int]*genome.Node = make(map[int]*genome.Node)
-	connStore map[int]*genome.Gene = make(map[int]*genome.Gene)
+	nodeStore map[int]*genetics.Node = make(map[int]*genetics.Node)
+	connStore map[int]*genetics.Gene = make(map[int]*genetics.Gene)
 )
 
 func TestFromFile(t *testing.T) {
@@ -43,21 +43,21 @@ func TestFromFile(t *testing.T) {
 	tests := []struct {
 		name     string
 		args     args
-		expected *genome.Genome
+		expected *genetics.Genome
 		wantErr  bool
 	}{
 		{
 			name: "valid startgenome",
 			args: args{path: "validstartgenome", fileContent: validFileContent},
-			expected: &genome.Genome{
+			expected: &genetics.Genome{
 				Id: 1,
-				Nodes: []*genome.Node{
-					createNode(genome.NodeBias),
-					createNode(genome.NodeInput),
-					createNode(genome.NodeInput),
-					createNode(genome.NodeOutput),
+				Nodes: []*genetics.Node{
+					createNode(genetics.NodeBias),
+					createNode(genetics.NodeInput),
+					createNode(genetics.NodeInput),
+					createNode(genetics.NodeOutput),
 				},
-				Genes: []*genome.Gene{
+				Genes: []*genetics.Gene{
 					createGene(nodeStore[1], nodeStore[4], 1.0, true),
 					createGene(nodeStore[2], nodeStore[4], 1.0, true),
 					createGene(nodeStore[3], nodeStore[4], 1.0, true),
@@ -76,7 +76,7 @@ func TestFromFile(t *testing.T) {
 		prepareGenomeFile(t, genomeFilePath, tt.args.fileContent)
 
 		t.Run(tt.name, func(t *testing.T) {
-			actual, err := genome.FromFile(genomeFilePath)
+			actual, err := genetics.FromFile(genomeFilePath)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("FromFile() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -111,24 +111,24 @@ func prepareGenomeFile(t *testing.T, path, content string) {
 	}
 }
 
-func createNode(nt genome.NodeType) *genome.Node {
+func createNode(nt genetics.NodeType) *genetics.Node {
 	id := len(nodeStore)
 	id++
 
-	n := &genome.Node{Id: uint(id), NodeType: nt}
+	n := &genetics.Node{Id: uint(id), NodeType: nt}
 	nodeStore[id] = n
 	return n
 }
 
-func createGene(inNode, outNode *genome.Node, weight float64, enabled bool) *genome.Gene {
+func createGene(inNode, outNode *genetics.Node, weight float64, enabled bool) *genetics.Gene {
 	id := len(connStore)
 	id++
 
-	g := &genome.Gene{Innovation: uint(id), Weight: weight, InNode: inNode, OutNode: outNode, Enabled: enabled, Recurrent: false}
+	g := &genetics.Gene{Innovation: uint(id), Weight: weight, InNode: inNode, OutNode: outNode, Enabled: enabled, Recurrent: false}
 	return g
 }
 
-func nodesMatch(actualNodes, expectedNodes genome.Nodes) error {
+func nodesMatch(actualNodes, expectedNodes genetics.Nodes) error {
 
 	actLen, expLen := len(actualNodes), len(expectedNodes)
 	if actLen != expLen {
@@ -145,7 +145,7 @@ func nodesMatch(actualNodes, expectedNodes genome.Nodes) error {
 	return nil
 }
 
-func genesMatch(actualGenes, expectedGenes []*genome.Gene) error {
+func genesMatch(actualGenes, expectedGenes []*genetics.Gene) error {
 
 	actLen, expLen := len(actualGenes), len(expectedGenes)
 	if actLen != expLen {

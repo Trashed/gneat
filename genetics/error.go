@@ -1,4 +1,4 @@
-package genome
+package genetics
 
 import "errors"
 

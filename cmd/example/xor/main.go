@@ -12,7 +12,7 @@ import (
 
 	"github.com/Trashed/gneat"
 	"github.com/Trashed/gneat/config"
-	"github.com/Trashed/gneat/genome"
+	"github.com/Trashed/gneat/genetics"
 )
 
 // TODO: WIP implementation, may possibly and probably will change in the future
@@ -23,7 +23,7 @@ func main() {
 		log.Println("this activation function is a stub")
 	}) // TODO: Inject experimentFunc to NeatCtx
 	// TODO: Read starter genome from file and generate starter population from starter genome
-	genome, err := genome.FromFile("startgenome")
+	genome, err := genetics.FromFile("startgenome")
 	if err != nil {
 		log.Fatalf("parsing genome file failed: %v\n", err)
 	}
