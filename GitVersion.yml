@@ -8,7 +8,7 @@ tag-pre-release-weight: 60000
 commit-message-incrementing: Enabled
 branches:
   main:
-    mode: ContinuousDelivery
+    mode: ContinuousDeployment
     label: ''
     increment: None
     track-merge-target: false
