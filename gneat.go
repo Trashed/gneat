@@ -11,6 +11,7 @@ import (
 	"log"
 
 	"github.com/Trashed/gneat/genetics"
+	"github.com/Trashed/gneat/mutation"
 )
 
 type Neat struct {
@@ -32,8 +33,8 @@ func (n *Neat) SeedPopulation(initialGenome *genetics.Genome) error {
 
 	for i := range n.config.PopulationSize {
 		genomeCopy := genetics.CopyGenome(initialGenome)
-		// TODO: Mutate weights of the copied genome
-		// TODO: genetics.MutateRandomWeights or mutation.ApplyRandWeights
+		// Assigning 0.5 as the weight mutation rate assures that about half of the connections are mutated.
+		mutation.ApplyRandWeights(genomeCopy, 0.5, n.config.WeightPerturbationStrength)
 		n.Population[i] = genomeCopy
 	}
 

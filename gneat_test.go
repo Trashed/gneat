@@ -60,7 +60,8 @@ genomeend 1`),
 		t.Run(test.name, func(t *testing.T) {
 
 			conf := gneat.NeatConfig{
-				PopulationSize: 100,
+				PopulationSize:             100,
+				WeightPerturbationStrength: 0.03,
 			}
 
 			n := gneat.Init(conf)
