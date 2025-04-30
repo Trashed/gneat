@@ -10,10 +10,13 @@ import (
 	"errors"
 	"log"
 
-	"github.com/Trashed/gneat/genome"
+	"github.com/Trashed/gneat/genetics"
+	"github.com/Trashed/gneat/mutation"
 )
 
 type Neat struct {
+	Population genetics.Population
+
 	config       NeatConfig
 	experiment   func()
 	reporterFunc func()
@@ -23,8 +26,19 @@ func (n *Neat) SetExperiment(experimentFunc func()) {
 	n.experiment = experimentFunc
 }
 
-func (n *Neat) SeedPopulation(initialGenome *genome.Genome) {
-	log.Printf("initial genome: %+v\n", initialGenome)
+func (n *Neat) SeedPopulation(initialGenome *genetics.Genome) error {
+	if initialGenome == nil {
+		return genetics.ErrNilInitialGenome
+	}
+
+	for i := range n.config.PopulationSize {
+		genomeCopy := genetics.CopyGenome(initialGenome)
+		// Assigning 0.5 as the weight mutation rate assures that about half of the connections are mutated.
+		mutation.ApplyRandWeights(genomeCopy, 0.5, n.config.WeightPerturbationStrength)
+		n.Population[i] = genomeCopy
+	}
+
+	return nil
 }
 
 func (n *Neat) Run(reporterFunc func()) error {
@@ -35,6 +49,10 @@ func (n *Neat) Run(reporterFunc func()) error {
 	return errors.New("not implemented, I can't run anything")
 }
 
-func Init(neatConf NeatConfig) *Neat {
-	return nil
+func Init(conf NeatConfig) *Neat {
+	return &Neat{
+		Population: make(genetics.Population, conf.PopulationSize),
+
+		config: conf,
+	}
 }

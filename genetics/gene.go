@@ -1,4 +1,4 @@
-package genome
+package genetics
 
 type Gene struct {
 	// innovation/id, weight, input id, output id, enabled/disabled

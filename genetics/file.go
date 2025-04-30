@@ -4,10 +4,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package genome
+package genetics
 
 import (
 	"bufio"
+	"io"
 	"os"
 	"regexp"
 	"strconv"
@@ -15,18 +16,30 @@ import (
 )
 
 func FromFile(path string) (*Genome, error) {
-	g := &Genome{
-		Nodes: make([]*Node, 0),
-		Genes: make([]*Gene, 0),
-	}
 
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
 
-	sc := bufio.NewScanner(file)
+	g, err := ReadGenome(file)
+	if err != nil {
+		return nil, err
+	}
+
+	return g, nil
+}
+
+func ReadGenome(r io.ReadCloser) (*Genome, error) {
+	g := &Genome{
+		Nodes: make([]*Node, 0),
+		Genes: make([]*Gene, 0),
+	}
+	var err error
+
+	defer r.Close()
+
+	sc := bufio.NewScanner(r)
 
 	discardCommentRegexp := regexp.MustCompile(`^(\s*/{2,}|/{2,})`)
 
@@ -37,6 +50,10 @@ func FromFile(path string) (*Genome, error) {
 		if err != nil {
 			return nil, err
 		}
+	}
+
+	if err = sc.Err(); err == nil && len(g.Genes) == 0 && len(g.Nodes) == 0 {
+		return nil, ErrEmptyGenomeFile
 	}
 
 	return g, nil

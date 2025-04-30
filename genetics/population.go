@@ -4,10 +4,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package genome
+package genetics
 
-type Genome struct {
-	Id    uint
-	Nodes Nodes
-	Genes []*Gene // Connections between Nodes
+type Population []*Genome
+
+func (p Population) Size() int {
+	return len(p)
 }
