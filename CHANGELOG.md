@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Pull request template.
 
+### Changed
+
+- Updated GitVersion configuration.
+
 ## [v0.1.0]
 
 ### Added
