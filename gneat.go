@@ -44,7 +44,7 @@ func (n *Neat) SeedPopulation(initialGenome *genetics.Genome) error {
 func (n *Neat) Run(reporterFunc func()) error {
 	n.reporterFunc = reporterFunc
 
-	log.Println("I can't run anything")
+	log.Println("I'm not implented yet")
 
 	return errors.New("not implemented, I can't run anything")
 }
