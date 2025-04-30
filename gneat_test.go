@@ -58,11 +58,21 @@ genomeend 1`),
 		}
 
 		t.Run(test.name, func(t *testing.T) {
-			n := gneat.Neat{}
+
+			conf := gneat.NeatConfig{
+				PopulationSize: 100,
+			}
+
+			n := gneat.Init(conf)
+
 			err = n.SeedPopulation(initialGenome)
 
 			if err != nil && test.expectedError != err {
 				t.Fatalf("unexpected failure in seeding the population: %v\n", err)
+			}
+
+			if n.Population.Size() != conf.PopulationSize {
+				t.Fatalf("expected population size to be %d but got %d\n", n.Population.Size(), conf.PopulationSize)
 			}
 		})
 	}

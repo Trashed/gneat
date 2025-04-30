@@ -14,6 +14,8 @@ import (
 )
 
 type Neat struct {
+	Population genetics.Population
+
 	config       NeatConfig
 	experiment   func()
 	reporterFunc func()
@@ -28,7 +30,13 @@ func (n *Neat) SeedPopulation(initialGenome *genetics.Genome) error {
 		return genetics.ErrNilInitialGenome
 	}
 
-	log.Printf("initial genome: %+v\n", initialGenome)
+	for i := range n.config.PopulationSize {
+		genomeCopy := genetics.CopyGenome(initialGenome)
+		// TODO: Mutate weights of the copied genome
+		// TODO: genetics.MutateRandomWeights or mutation.ApplyRandWeights
+		n.Population[i] = genomeCopy
+	}
+
 	return nil
 }
 
@@ -40,6 +48,10 @@ func (n *Neat) Run(reporterFunc func()) error {
 	return errors.New("not implemented, I can't run anything")
 }
 
-func Init(neatConf NeatConfig) *Neat {
-	return nil
+func Init(conf NeatConfig) *Neat {
+	return &Neat{
+		Population: make(genetics.Population, conf.PopulationSize),
+
+		config: conf,
+	}
 }
