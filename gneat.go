@@ -16,6 +16,7 @@ import (
 
 type Neat struct {
 	Population genetics.Population
+	Innovation *genetics.InnovationStore
 
 	config       NeatConfig
 	experiment   func()
@@ -30,6 +31,8 @@ func (n *Neat) SeedPopulation(initialGenome *genetics.Genome) error {
 	if initialGenome == nil {
 		return genetics.ErrNilInitialGenome
 	}
+
+	n.Innovation.ProcessGenome(initialGenome)
 
 	for i := range n.config.PopulationSize {
 		genomeCopy := genetics.CopyGenome(initialGenome)
@@ -52,6 +55,7 @@ func (n *Neat) Run(reporterFunc func()) error {
 func Init(conf NeatConfig) *Neat {
 	return &Neat{
 		Population: make(genetics.Population, conf.PopulationSize),
+		Innovation: genetics.NewInnovationStore(),
 
 		config: conf,
 	}
