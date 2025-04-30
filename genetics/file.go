@@ -53,7 +53,7 @@ func ReadGenome(r io.ReadCloser) (*Genome, error) {
 	}
 
 	if err = sc.Err(); err == nil && len(g.Genes) == 0 && len(g.Nodes) == 0 {
-		return nil, ErrNilInitialGenome
+		return nil, ErrEmptyGenomeFile
 	}
 
 	return g, nil

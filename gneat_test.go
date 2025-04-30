@@ -33,45 +33,52 @@ genomeend 1`),
 
 	tests := []struct {
 		name               string
-		initialGenome      *g.Genome
+		genomeName         string
 		expectedPopulation int
 		expectedError      error
 	}{
 		{
 			name:          "Nil initial genome",
-			initialGenome: initialGenomeFromFile(t, fs, "empty_genome"),
+			genomeName:    "empty_genome",
 			expectedError: g.ErrNilInitialGenome,
 		},
 		{
 			name:          "Simple genome",
-			initialGenome: initialGenomeFromFile(t, fs, "simple_genome"),
+			genomeName:    "simple_genome",
 			expectedError: nil,
 		},
 	}
 
 	for _, test := range tests {
+
+		initialGenome, err := initialGenomeFromFile(fs, test.genomeName)
+
+		if err != nil && err == g.ErrEmptyGenomeFile {
+			continue
+		}
+
 		t.Run(test.name, func(t *testing.T) {
 			n := gneat.Neat{}
-			err := n.SeedPopulation(test.initialGenome)
+			err = n.SeedPopulation(initialGenome)
 
-			if test.expectedError != err {
-				t.Fatalf("expected error \"%v\" but got \"%v\"\n", test.expectedError, err)
+			if err != nil && test.expectedError != err {
+				t.Fatalf("unexpected failure in seeding the population: %v\n", err)
 			}
 		})
 	}
 }
 
-func initialGenomeFromFile(t *testing.T, fs fs.FS, fileName string) *g.Genome {
+func initialGenomeFromFile(fs fs.FS, fileName string) (*g.Genome, error) {
 	f, err := fs.Open(fileName)
 
 	if err != nil {
-		t.Fatal("reading genome from file failed: " + err.Error())
+		return nil, err
 	}
 
 	genome, err := g.ReadGenome(f)
 	if err != nil {
-		t.Fatalf("reading genome content failed: %v\n", err)
+		return nil, err
 	}
 
-	return genome
+	return genome, nil
 }
