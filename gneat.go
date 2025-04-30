@@ -10,7 +10,7 @@ import (
 	"errors"
 	"log"
 
-	"github.com/Trashed/gneat/genome"
+	"github.com/Trashed/gneat/genetics"
 )
 
 type Neat struct {
@@ -23,9 +23,9 @@ func (n *Neat) SetExperiment(experimentFunc func()) {
 	n.experiment = experimentFunc
 }
 
-func (n *Neat) SeedPopulation(initialGenome *genome.Genome) error {
+func (n *Neat) SeedPopulation(initialGenome *genetics.Genome) error {
 	if initialGenome == nil {
-		return genome.ErrNilInitialGenome
+		return genetics.ErrNilInitialGenome
 	}
 
 	log.Printf("initial genome: %+v\n", initialGenome)

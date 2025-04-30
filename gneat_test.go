@@ -6,7 +6,7 @@ import (
 	"testing/fstest"
 
 	"github.com/Trashed/gneat"
-	g "github.com/Trashed/gneat/genome"
+	g "github.com/Trashed/gneat/genetics"
 )
 
 func TestSeedPopulation(t *testing.T) {
