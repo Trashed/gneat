@@ -6,6 +6,16 @@
 
 package genetics
 
+var (
+	idIncrementer func() uint = func() func() uint {
+		id := uint(0)
+		return func() uint {
+			id++
+			return id
+		}
+	}()
+)
+
 type NodeType uint
 
 const (
@@ -18,6 +28,14 @@ const (
 type Node struct {
 	Id       uint
 	NodeType NodeType
+}
+
+// NewNode creates a new node with a unique ID and the specified type.
+func NewNode(nodeType NodeType) *Node {
+	return &Node{
+		Id:       idIncrementer(),
+		NodeType: nodeType,
+	}
 }
 
 type Nodes []*Node
