@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Implemented a store structure for keeping track of unique genes, or innovations, as they're called in NEAT.
 
+### Changed
+
+- Updated pull request template.
+
 ## [v0.2.0] - 2025-04-30
 
 ### Added
