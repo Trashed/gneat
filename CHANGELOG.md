@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Implemented a store structure for keeping track of unique genes, or innovations, as they're called in NEAT.
+- Implemented a store structure for keeping track of unique genes, or innovations, as they're called in the NEAT implementation.
 
 ### Changed
 
