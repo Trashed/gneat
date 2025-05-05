@@ -9,5 +9,21 @@ package genetics
 type Genome struct {
 	Id    uint
 	Nodes Nodes
-	Genes []*Gene // Connections between Nodes
+	Genes map[uint]*Gene // Connections between Nodes
+}
+
+func (g *Genome) PushGene(gene *Gene) {
+
+	if g.Nodes == nil {
+		g.Nodes = make(Nodes)
+	}
+
+	if g.Genes == nil {
+		g.Genes = make(map[uint]*Gene)
+	}
+
+	g.Nodes[gene.InNode.Id] = gene.InNode
+	g.Nodes[gene.OutNode.Id] = gene.OutNode
+
+	g.Genes[gene.Innovation] = gene
 }

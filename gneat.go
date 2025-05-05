@@ -32,8 +32,6 @@ func (n *Neat) SeedPopulation(initialGenome *genetics.Genome) error {
 		return genetics.ErrNilInitialGenome
 	}
 
-	n.Innovation.ProcessGenome(initialGenome)
-
 	for i := range n.config.PopulationSize {
 		genomeCopy := genetics.CopyGenome(initialGenome)
 		// Assigning 0.5 as the weight mutation rate assures that about half of the connections are mutated.

@@ -55,11 +55,8 @@ func (s *InnovationStore) AddGene(gene *Gene) (uint, bool) {
 	return s.innovationNum, true
 }
 
-// ProcessGenome processes a genome by adding its genes to the innovation store.
-func (s *InnovationStore) ProcessGenome(g *Genome) {
-	for _, gene := range g.Genes {
-		s.AddGene(gene)
-	}
+func (s *InnovationStore) Innovation() uint {
+	return s.innovationNum
 }
 
 func toStringKey(gene *Gene) string {

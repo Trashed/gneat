@@ -1,6 +1,7 @@
 package mutation
 
 import (
+	"errors"
 	"math/rand"
 
 	"github.com/Trashed/gneat/genetics"
@@ -14,3 +15,16 @@ func ApplyRandWeights(g *genetics.Genome, weightMutationRate float64, weightPert
 		}
 	}
 }
+
+// AddNewGene creates a new gene between two existing nodes.
+func AddNewGene(g *genetics.Genome, innovation *genetics.InnovationStore) error {
+
+	// TODO: Get possible
+
+	return errors.New("not implemented")
+}
+
+/*
+// TODO: Write implementation
+func AddNewRecurrentGene(g *genetics.Genome, innovation *genetics.InnovationStore) {})
+*/

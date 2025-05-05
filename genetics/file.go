@@ -32,8 +32,8 @@ func FromFile(path string) (*Genome, error) {
 
 func ReadGenome(r io.ReadCloser) (*Genome, error) {
 	g := &Genome{
-		Nodes: make([]*Node, 0),
-		Genes: make([]*Gene, 0),
+		Nodes: make(Nodes, 0),
+		Genes: make(map[uint]*Gene, 0),
 	}
 	var err error
 
@@ -114,7 +114,8 @@ func parseNode(g *Genome, line string) error {
 
 		n.NodeType = NodeType(nodeType)
 
-		g.Nodes = append(g.Nodes, n)
+		//g.Nodes = append(g.Nodes, n)
+		g.Nodes[n.Id] = n
 	}
 
 	return nil
@@ -156,7 +157,8 @@ func parseGene(g *Genome, line string) error {
 		isEnabled := intToBool(int(enabledNum))
 
 		// TODO: Implement method to get a Node by id from Genome
-		g.Genes = append(g.Genes, &Gene{Innovation: uint(innovation), Weight: weight, InNode: g.Nodes.fetch(uint(inId)), OutNode: g.Nodes.fetch(uint(outId)), Enabled: isEnabled, Recurrent: false})
+		//g.Genes = append(g.Genes, &Gene{Innovation: uint(innovation), Weight: weight, InNode: g.Nodes.fetch(uint(inId)), OutNode: g.Nodes.fetch(uint(outId)), Enabled: isEnabled, Recurrent: false})
+		g.Genes[uint(innovation)] = &Gene{Innovation: uint(innovation), Weight: weight, InNode: g.Nodes.fetch(uint(inId)), OutNode: g.Nodes.fetch(uint(outId)), Enabled: isEnabled, Recurrent: false}
 	}
 
 	return nil

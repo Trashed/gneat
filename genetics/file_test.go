@@ -51,17 +51,17 @@ func TestFromFile(t *testing.T) {
 			args: args{path: "validstartgenome", fileContent: validFileContent},
 			expected: &genetics.Genome{
 				Id: 1,
-				Nodes: []*genetics.Node{
+				Nodes: createNodeMap([]*genetics.Node{
 					createNode(genetics.NodeBias),
 					createNode(genetics.NodeInput),
 					createNode(genetics.NodeInput),
 					createNode(genetics.NodeOutput),
-				},
-				Genes: []*genetics.Gene{
+				}),
+				Genes: createGeneMap([]*genetics.Gene{
 					createGene(nodeStore[1], nodeStore[4], 1.0, true),
 					createGene(nodeStore[2], nodeStore[4], 1.0, true),
 					createGene(nodeStore[3], nodeStore[4], 1.0, true),
-				},
+				}),
 			},
 			wantErr: false,
 		},
@@ -145,7 +145,7 @@ func nodesMatch(actualNodes, expectedNodes genetics.Nodes) error {
 	return nil
 }
 
-func genesMatch(actualGenes, expectedGenes []*genetics.Gene) error {
+func genesMatch(actualGenes, expectedGenes map[uint]*genetics.Gene) error {
 
 	actLen, expLen := len(actualGenes), len(expectedGenes)
 	if actLen != expLen {
@@ -160,4 +160,24 @@ func genesMatch(actualGenes, expectedGenes []*genetics.Gene) error {
 	}
 
 	return nil
+}
+
+func createNodeMap(nodes []*genetics.Node) map[uint]*genetics.Node {
+	nodeMap := make(map[uint]*genetics.Node)
+
+	for _, node := range nodes {
+		nodeMap[node.Id] = node
+	}
+
+	return nodeMap
+}
+
+func createGeneMap(genes []*genetics.Gene) map[uint]*genetics.Gene {
+	geneMap := make(map[uint]*genetics.Gene)
+
+	for _, g := range genes {
+		geneMap[g.Innovation] = g
+	}
+
+	return geneMap
 }

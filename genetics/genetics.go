@@ -29,20 +29,20 @@ func CopyNode(n *Node) *Node {
 	}
 }
 
-func copy(source []*Gene) (Nodes, []*Gene) {
+func copy(source map[uint]*Gene) (Nodes, map[uint]*Gene) {
 	newNodes := make(Nodes, 0)
-	newGenes := make([]*Gene, 0)
+	newGenes := make(map[uint]*Gene, 0)
 
 	for _, g := range source {
 
 		if canInsert(g.InNode, newNodes) {
-			newNodes = append(newNodes, g.InNode)
+			newNodes[g.InNode.Id] = g.InNode
 		}
 		if canInsert(g.OutNode, newNodes) {
-			newNodes = append(newNodes, g.OutNode)
+			newNodes[g.OutNode.Id] = g.OutNode
 		}
 
-		newGenes = append(newGenes, CopyGene(g))
+		newGenes[g.Innovation] = CopyGene(g)
 	}
 
 	return newNodes, newGenes

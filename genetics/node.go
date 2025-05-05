@@ -31,6 +31,8 @@ type Node struct {
 }
 
 // NewNode creates a new node with a unique ID and the specified type.
+// TODO: Pass the ID as an arument rather than creating it within NewNode.
+// TODO: Refactor InnovationStore to include node creation and ID assignment?
 func NewNode(nodeType NodeType) *Node {
 	return &Node{
 		Id:       idIncrementer(),
@@ -38,7 +40,7 @@ func NewNode(nodeType NodeType) *Node {
 	}
 }
 
-type Nodes []*Node
+type Nodes map[uint]*Node
 
 func (ns Nodes) fetch(id uint) *Node {
 	// TODO: Optimize this with binary search
