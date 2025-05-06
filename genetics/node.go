@@ -32,6 +32,10 @@ type Node struct {
 
 type Nodes map[uint]*Node
 
+func (ns Nodes) Len() int {
+	return len(ns)
+}
+
 func (ns Nodes) fetch(id uint) *Node {
 	// TODO: Optimize this with binary search
 	// TODO: Binary search expects the slice to be sorted -> implement logic where the Nodes slice is sorted each time a new node is pushed

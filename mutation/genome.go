@@ -1,10 +1,10 @@
 package mutation
 
 import (
-	"errors"
 	"math/rand"
 
 	"github.com/Trashed/gneat/genetics"
+	gneatrand "github.com/Trashed/gneat/rand"
 )
 
 func ApplyRandWeights(g *genetics.Genome, weightMutationRate float64, weightPerturbationStrength float64) {
@@ -17,11 +17,19 @@ func ApplyRandWeights(g *genetics.Genome, weightMutationRate float64, weightPert
 }
 
 // AddNewGene creates a new gene between two existing nodes.
-func AddNewGene(g *genetics.Genome, innovation *genetics.InnovationStore) error {
+func AddNewGene(g *genetics.Genome, innovation *genetics.InnovationStore, randFunc func(items gneatrand.ItemList) uint) (*genetics.Gene, error) {
+	randomId1 := randFunc(g.Nodes)
+	randomId2 := randFunc(g.Nodes)
 
-	// TODO: Get possible
+	nodeIn := g.Nodes[randomId1]
+	nodeOut := g.Nodes[randomId2]
 
-	return errors.New("not implemented")
+	gene, err := innovation.CreateGene(nodeIn, nodeOut)
+	if err != nil {
+		return nil, err
+	}
+
+	return gene, nil
 }
 
 /*

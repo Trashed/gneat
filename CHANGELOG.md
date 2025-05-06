@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Implemented a mutation method that inserts a new node into a gene.
+- Implemented a mutation method that adds a random gene between two nodes.
 
 ## [v0.3.0] - 2025-05-02
 

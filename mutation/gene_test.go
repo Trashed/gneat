@@ -10,23 +10,15 @@ import (
 func TestAddNewNode(t *testing.T) {
 	t.Parallel()
 
+	const newNodeId = 3
 	store := genetics.NewInnovationStore()
 
-	gene := &genetics.Gene{
-		InNode:    store.CreateNode(genetics.NodeInput),
-		OutNode:   store.CreateNode(genetics.NodeOutput),
-		Weight:    0.5,
-		Enabled:   true,
-		Recurrent: false,
+	gene, err := store.CreateGene(store.CreateNode(genetics.NodeInput), store.CreateNode(genetics.NodeOutput))
+
+	if err != nil {
+		t.Fatalf("gene creation should succeed, but got error: %v\n", err)
 	}
 
-	const newNodeId = 3
-
-	if _, isAdded := store.PushGene(gene); !isAdded {
-		t.Error("Expected to add gene to innovation store, but it was not added")
-	}
-
-	// Add a new node to the gene
 	newGenes, newNode := mutation.AddNewNode(gene, store)
 
 	if newGenes == nil {
