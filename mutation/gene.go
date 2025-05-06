@@ -33,7 +33,7 @@ func AddNewNode(g *genetics.Gene, innovation *genetics.InnovationStore) ([]*gene
 		Enabled:   true,
 		Recurrent: false,
 	}
-	innovation.AddGene(newGene1)
+	innovation.PushGene(newGene1)
 
 	newGene2 := &genetics.Gene{
 		InNode:    newNode,
@@ -42,7 +42,7 @@ func AddNewNode(g *genetics.Gene, innovation *genetics.InnovationStore) ([]*gene
 		Enabled:   true,
 		Recurrent: false,
 	}
-	innovation.AddGene(newGene2)
+	innovation.PushGene(newGene2)
 
 	return []*genetics.Gene{newGene1, newGene2}, newNode
 }

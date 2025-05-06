@@ -12,6 +12,46 @@ import (
 	"github.com/Trashed/gneat/genetics"
 )
 
+func TestCreateNode(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name      string
+		nodeTypes []genetics.NodeType
+		//expectedNodeCount int
+	}{
+		{
+			name:      "1 input, 1 output",
+			nodeTypes: []genetics.NodeType{genetics.NodeInput, genetics.NodeOutput},
+			//expectedNodeCount: 2,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			store := genetics.NewInnovationStore()
+
+			for i, nt := range test.nodeTypes {
+				expId := uint(i + 1)
+				n := store.CreateNode(nt)
+
+				if n == nil {
+					t.Fatalf("node creation failed, it shouldn't be nil")
+				}
+
+				if n.NodeType != nt {
+					t.Errorf("expected node type to be %v but got %v\n", nt, n.NodeType)
+				}
+
+				if n.Id != expId {
+					t.Errorf("expected node id to be %d but got %d\n", expId, n.Id)
+				}
+			}
+
+		})
+	}
+}
+
 func TestAddGene(t *testing.T) {
 	t.Parallel()
 
@@ -69,8 +109,8 @@ func TestAddGene(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		t.Run("AddGene", func(t *testing.T) {
-			innovationNum, isAdded := store.AddGene(test.gene)
+		t.Run("PushGene", func(t *testing.T) {
+			innovationNum, isAdded := store.PushGene(test.gene)
 			if innovationNum != test.expectedNum || isAdded != test.expectedAdd {
 				t.Fatalf("Expected innovation number %d, got %d, isAdded: %v", test.expectedNum, innovationNum, isAdded)
 			}

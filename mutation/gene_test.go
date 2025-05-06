@@ -22,7 +22,7 @@ func TestAddNewNode(t *testing.T) {
 	const newNodeId = 3
 
 	store := genetics.NewInnovationStore()
-	if _, isAdded := store.AddGene(gene); !isAdded {
+	if _, isAdded := store.PushGene(gene); !isAdded {
 		t.Error("Expected to add gene to innovation store, but it was not added")
 	}
 

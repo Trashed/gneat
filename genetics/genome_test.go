@@ -22,7 +22,7 @@ func TestPushGene(t *testing.T) {
 		Recurrent: false,
 	}
 
-	if _, isAdded := store.AddGene(gene); !isAdded {
+	if _, isAdded := store.PushGene(gene); !isAdded {
 		t.Fatal("failed to add gene to innovation store")
 	}
 
@@ -72,8 +72,8 @@ func TestPushTwoGenes(t *testing.T) {
 		Recurrent: false,
 	}
 
-	store.AddGene(gene1)
-	store.AddGene(gene2)
+	store.PushGene(gene1)
+	store.PushGene(gene2)
 
 	if expInnovation != store.Innovation() {
 		t.Errorf("expected innovation %d, got %d", expInnovation, store.Innovation())
