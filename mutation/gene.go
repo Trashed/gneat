@@ -25,7 +25,7 @@ func AddNewNode(g *genetics.Gene, innovation *genetics.InnovationStore) ([]*gene
 
 	g.Enabled = false
 
-	newNode := genetics.NewNode(genetics.NodeHidden)
+	newNode := innovation.CreateNode(genetics.NodeHidden)
 	newGene1 := &genetics.Gene{
 		InNode:    g.InNode,
 		OutNode:   newNode,

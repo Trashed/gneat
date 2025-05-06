@@ -18,12 +18,22 @@ func TestCreateNode(t *testing.T) {
 	tests := []struct {
 		name      string
 		nodeTypes []genetics.NodeType
-		//expectedNodeCount int
 	}{
 		{
 			name:      "1 input, 1 output",
 			nodeTypes: []genetics.NodeType{genetics.NodeInput, genetics.NodeOutput},
-			//expectedNodeCount: 2,
+		},
+		{
+			name:      "2 inputs, 1 output",
+			nodeTypes: []genetics.NodeType{genetics.NodeInput, genetics.NodeInput, genetics.NodeOutput},
+		},
+		{
+			name:      "5 inputs, 2 outputs",
+			nodeTypes: []genetics.NodeType{genetics.NodeInput, genetics.NodeInput, genetics.NodeInput, genetics.NodeInput, genetics.NodeInput, genetics.NodeOutput, genetics.NodeOutput},
+		},
+		{
+			name:      "3 inputs, 2 hidden nodes, 2 outputs",
+			nodeTypes: []genetics.NodeType{genetics.NodeInput, genetics.NodeInput, genetics.NodeInput, genetics.NodeHidden, genetics.NodeHidden, genetics.NodeOutput, genetics.NodeOutput},
 		},
 	}
 

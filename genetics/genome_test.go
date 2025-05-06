@@ -15,8 +15,8 @@ func TestPushGene(t *testing.T) {
 
 	store := genetics.NewInnovationStore()
 	gene := &genetics.Gene{
-		InNode:    genetics.NewNode(genetics.NodeInput),
-		OutNode:   genetics.NewNode(genetics.NodeOutput),
+		InNode:    store.CreateNode(genetics.NodeInput),
+		OutNode:   store.CreateNode(genetics.NodeOutput),
 		Weight:    0.5,
 		Enabled:   true,
 		Recurrent: false,
@@ -55,17 +55,17 @@ func TestPushTwoGenes(t *testing.T) {
 
 	store := genetics.NewInnovationStore()
 
-	outNode := genetics.NewNode(genetics.NodeOutput)
+	outNode := store.CreateNode(genetics.NodeOutput)
 
 	gene1 := &genetics.Gene{
-		InNode:    genetics.NewNode(genetics.NodeInput),
+		InNode:    store.CreateNode(genetics.NodeInput),
 		OutNode:   outNode,
 		Weight:    0.5,
 		Enabled:   true,
 		Recurrent: false,
 	}
 	gene2 := &genetics.Gene{
-		InNode:    genetics.NewNode(genetics.NodeInput),
+		InNode:    store.CreateNode(genetics.NodeInput),
 		OutNode:   outNode,
 		Weight:    0.5,
 		Enabled:   true,
