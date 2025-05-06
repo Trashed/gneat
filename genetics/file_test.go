@@ -125,6 +125,7 @@ func createGene(inNode, outNode *genetics.Node, weight float64, enabled bool) *g
 	id++
 
 	g := &genetics.Gene{Innovation: uint(id), Weight: weight, InNode: inNode, OutNode: outNode, Enabled: enabled, Recurrent: false}
+	connStore[id] = g
 	return g
 }
 
