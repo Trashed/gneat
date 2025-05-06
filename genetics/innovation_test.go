@@ -7,6 +7,7 @@
 package genetics_test
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/Trashed/gneat/genetics"
@@ -58,6 +59,80 @@ func TestCreateNode(t *testing.T) {
 				}
 			}
 
+		})
+	}
+}
+
+func TestCreateGene(t *testing.T) {
+	t.Parallel()
+
+	store := genetics.NewInnovationStore()
+
+	tests := []struct {
+		name          string
+		in            *genetics.Node
+		out           *genetics.Node
+		expInnovation uint
+		expErr        error
+	}{
+		{
+			name:   "input node is nil",
+			in:     nil,
+			out:    &genetics.Node{Id: 2, NodeType: genetics.NodeOutput},
+			expErr: genetics.ErrNilNode,
+		},
+		{
+			name:   "output node is nil",
+			in:     &genetics.Node{Id: 1, NodeType: genetics.NodeInput},
+			out:    nil,
+			expErr: genetics.ErrNilNode,
+		},
+		{
+			name:          "gene created successfully",
+			in:            store.CreateNode(genetics.NodeInput),
+			out:           store.CreateNode(genetics.NodeOutput),
+			expInnovation: 1,
+			expErr:        nil,
+		},
+		{
+			name:          "existing gene used successfully",
+			in:            store.GetNode(1),
+			out:           store.GetNode(2),
+			expInnovation: 1,
+			expErr:        nil,
+		},
+		{
+			name:          "new gene created successfully",
+			in:            store.CreateNode(genetics.NodeInput),
+			out:           store.CreateNode(genetics.NodeOutput),
+			expInnovation: 2,
+			expErr:        nil,
+		},
+		{
+			name:          "new gene with hidden node created successfully",
+			in:            store.CreateNode(genetics.NodeInput),
+			out:           store.CreateNode(genetics.NodeHidden),
+			expInnovation: 3,
+			expErr:        nil,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			g, err := store.CreateGene(test.in, test.out)
+
+			if err != nil && !errors.Is(err, test.expErr) {
+				t.Errorf("expected err of \"%v\" but got \"%v\"\n", test.expErr, err)
+			} else if g != nil && err == nil {
+				if g.InNode == nil || g.OutNode == nil {
+					t.Error("gene created but input and/or output nodes are nil")
+				}
+				if g.Innovation != test.expInnovation {
+					t.Errorf("gene created but innovation numbers don't match, expected %d but got %d\n", test.expInnovation, g.Innovation)
+				}
+			} else if g == nil && test.expErr == nil && err != nil {
+				t.Fatalf("unexpected failure with error: %v\n", err)
+			}
 		})
 	}
 }

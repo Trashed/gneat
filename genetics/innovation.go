@@ -6,14 +6,9 @@
 
 package genetics
 
-import "strconv"
-
-type storedGene struct {
-	key        string
-	innovation uint
-	inNode     uint
-	outNode    uint
-}
+import (
+	"strconv"
+)
 
 // InnovationStore is a structure that manages the innovation numbers of genes.
 type InnovationStore struct {
@@ -45,6 +40,37 @@ func (s *InnovationStore) CreateNode(nt NodeType) *Node {
 	return n
 }
 
+// CreateGene creates a gene from given nodes and returns it with a nil error.
+// If the gene is already in the store, that is returned instead. If either of
+// nodes provided as parameters is nil, an error is returned.
+func (s *InnovationStore) CreateGene(in *Node, out *Node) (*Gene, error) {
+	if in == nil || out == nil {
+		return nil, ErrNilNode
+	}
+
+	key := toStringKey2(in, out)
+	g, ok := s.innovationMap[key]
+	if ok {
+		return g, nil
+	}
+
+	g = &Gene{
+		InNode:    in,
+		OutNode:   out,
+		Enabled:   true,
+		Recurrent: false,
+		Weight:    1.0,
+	}
+
+	s.innovationMap[key] = g
+	s.innovationNum = uint(len(s.innovationMap))
+	g.Innovation = s.innovationNum
+
+	return g, nil
+}
+
+// Deprecated: PushGene is now redundant as a new method for creating genes was implemented.
+//
 // PushGene adds a gene to the innovation store and returns its innovation number.
 // If the gene already exists, it returns the existing innovation number and false.
 func (s *InnovationStore) PushGene(gene *Gene) (uint, bool) {
@@ -65,13 +91,26 @@ func (s *InnovationStore) PushGene(gene *Gene) (uint, bool) {
 	return s.innovationNum, true
 }
 
+// Innovation returns the current innovation number the store is on.
 func (s *InnovationStore) Innovation() uint {
 	return s.innovationNum
+}
+
+// GetNode returns a stored node for given node ID.
+func (s *InnovationStore) GetNode(i uint) *Node {
+	return s.nodes[i]
 }
 
 func toStringKey(gene *Gene) string {
 	inNodeStr := strconv.FormatUint(uint64(gene.InNode.Id), 10)
 	outNodeStr := strconv.FormatUint(uint64(gene.OutNode.Id), 10)
+
+	return inNodeStr + "->" + outNodeStr
+}
+
+func toStringKey2(in, out *Node) string {
+	inNodeStr := strconv.FormatUint(uint64(in.Id), 10)
+	outNodeStr := strconv.FormatUint(uint64(out.Id), 10)
 
 	return inNodeStr + "->" + outNodeStr
 }
