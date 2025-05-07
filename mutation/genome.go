@@ -17,7 +17,7 @@ func ApplyRandWeights(g *genetics.Genome, weightMutationRate float64, weightPert
 }
 
 // AddNewGene creates a new gene between two existing nodes.
-func AddNewGene(g *genetics.Genome, innovation *genetics.InnovationStore, randFunc func(items gneatrand.ItemList) uint) (*genetics.Gene, error) {
+func AddNewGene(g *genetics.Genome, innovation *genetics.InnovationStore, randFunc func(items gneatrand.Listable) uint) (*genetics.Gene, error) {
 	randomId1 := randFunc(g.Nodes)
 	randomId2 := randFunc(g.Nodes)
 
@@ -31,8 +31,3 @@ func AddNewGene(g *genetics.Genome, innovation *genetics.InnovationStore, randFu
 
 	return gene, nil
 }
-
-/*
-// TODO: Write implementation
-func AddNewRecurrentGene(g *genetics.Genome, innovation *genetics.InnovationStore) {})
-*/

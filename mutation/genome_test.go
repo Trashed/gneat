@@ -1,9 +1,10 @@
 package mutation_test
 
 import (
+	"testing"
+
 	"github.com/Trashed/gneat/mutation"
 	"github.com/Trashed/gneat/rand"
-	"testing"
 
 	"github.com/Trashed/gneat/genetics"
 )
@@ -48,11 +49,11 @@ func TestAddNewGene(t *testing.T) {
 	}
 }
 
-func mockRandItems(ids []uint /*, genes []*genetics.Gene*/) func(items rand.ItemList) uint {
+func mockRandItems(ids []uint) func(items rand.Listable) uint {
 	indexList := ids
 	currInternalIndex := 0
 
-	return func(items rand.ItemList) uint {
+	return func(items rand.Listable) uint {
 		val := indexList[currInternalIndex]
 		currInternalIndex++
 

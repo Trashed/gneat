@@ -6,14 +6,8 @@
 
 package genetics
 
-var (
-	idIncrementer func() uint = func() func() uint {
-		id := uint(0)
-		return func() uint {
-			id++
-			return id
-		}
-	}()
+import (
+	"slices"
 )
 
 type NodeType uint
@@ -34,6 +28,29 @@ type Nodes map[uint]*Node
 
 func (ns Nodes) Len() int {
 	return len(ns)
+}
+
+// List returns a list of node IDs.
+func (ns Nodes) List() []uint {
+	ids := make([]uint, 0)
+
+	for id := range ns {
+		ids = append(ids, id)
+	}
+
+	slices.SortFunc(ids, func(a uint, b uint) int {
+		if a < b {
+			return -1
+		}
+
+		if a > b {
+			return 1
+		}
+
+		return 0
+	})
+
+	return ids
 }
 
 func (ns Nodes) fetch(id uint) *Node {
